@@ -462,23 +462,38 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Selecciona/Renombra valores 3</from>
-      <to>Microsoft Excel writer</to>
+      <from>Valor JavaScript modificado</from>
+      <to>Filtrar filas</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Des-Normalización de fila</from>
+      <to>Des-Normalización de fila 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Replace in string</from>
-      <to>Ordenar filas</to>
+      <to>Valor JavaScript modificado</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Ordenar filas</from>
+      <from>Filtrar filas</from>
       <to>Selecciona/Renombra valores 3</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Ordenar filas</from>
+      <to>Microsoft Excel writer</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Selecciona/Renombra valores 3</from>
-      <to>Data validator FECHA ADMI</to>
+      <to>Ordenar filas</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Microsoft Excel writer</from>
+      <to>Data validator</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -576,7 +591,7 @@
       </field>
       <field>
         <name>FECHA ADMISIÓN</name>
-        <type>Date</type>
+        <type>String</type>
         <format>MM/dd/yy</format>
         <currency/>
         <decimal/>
@@ -598,7 +613,7 @@
       </field>
       <field>
         <name>FECHA ESTADO</name>
-        <type>Date</type>
+        <type>String</type>
         <format>MM/dd/yy</format>
         <currency/>
         <decimal/>
@@ -643,7 +658,7 @@
     <sheetfield/>
     <filefield/>
     <limit>0</limit>
-    <encoding/>
+    <encoding>ISO-8859-1</encoding>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <accept_filenames>N</accept_filenames>
     <accept_field/>
@@ -840,7 +855,7 @@
       <SpecifyFormat>N</SpecifyFormat>
       <date_time_format/>
       <sheetname>Sheet1</sheetname>
-      <autosizecolums>N</autosizecolums>
+      <autosizecolums>Y</autosizecolums>
       <retain_null_values>Y</retain_null_values>
       <stream_data>N</stream_data>
       <protect_sheet>N</protect_sheet>
@@ -932,7 +947,7 @@
       </field>
       <field>
         <name>FECHA ADMISIÓN</name>
-        <type>Date</type>
+        <type>None</type>
         <format>dd/MM/yyyy</format>
         <title>FECHA ADMISIÓN</title>
         <titleStyleCell/>
@@ -956,7 +971,7 @@
       </field>
       <field>
         <name>FECHA ESTADO</name>
-        <type>Date</type>
+        <type>None</type>
         <format>dd/MM/yyyy</format>
         <title>FECHA ESTADO</title>
         <titleStyleCell/>
@@ -976,8 +991,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>928</xloc>
-      <yloc>160</yloc>
+      <xloc>816</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1008,70 +1023,6 @@
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
-      <field>
-        <name>NOMBRES</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>APELLIDOS</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>CEDULA</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>MODALIDAD</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>NIVEL</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>FECHA ADMISIÓN</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>ESTADO ACTUAL</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>FECHA ESTADO</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1082,8 +1033,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>160</yloc>
+      <xloc>656</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1115,8 +1066,8 @@
         <in_stream_name>NOMBRES</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string/>
-        <replace_by_string/>
+        <replace_string>||</replace_string>
+        <replace_by_string>é</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -1127,8 +1078,8 @@
         <in_stream_name>APELLIDOS</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string/>
-        <replace_by_string/>
+        <replace_string>~</replace_string>
+        <replace_by_string>ñ</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -1136,10 +1087,10 @@
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>CEDULA</in_stream_name>
+        <in_stream_name>cedula</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string/>
+        <replace_string>,0</replace_string>
         <replace_by_string/>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
@@ -1235,7 +1186,7 @@
         <in_stream_name>FECHA ADMISIÓN</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string>�</replace_string>
+        <replace_string>´</replace_string>
         <replace_by_string/>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
@@ -1247,7 +1198,7 @@
         <in_stream_name>FECHA ESTADO</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string>�</replace_string>
+        <replace_string>´</replace_string>
         <replace_by_string/>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
@@ -1267,6 +1218,18 @@
         <case_sensitive>no</case_sensitive>
         <is_unicode>no</is_unicode>
       </field>
+      <field>
+        <in_stream_name>APELLIDOS</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>||</replace_string>
+        <replace_by_string>é</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1277,8 +1240,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>160</yloc>
+      <xloc>336</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1296,36 +1259,45 @@
     <fields>
       <field>
         <name>ID</name>
+        <rename/>
       </field>
       <field>
         <name>NOMBRES</name>
+        <rename/>
       </field>
       <field>
         <name>APELLIDOS</name>
+        <rename/>
       </field>
       <field>
         <name>CEDULA</name>
+        <rename/>
       </field>
       <field>
         <name>MODALIDAD</name>
+        <rename/>
       </field>
       <field>
         <name>NIVEL</name>
+        <rename/>
       </field>
       <field>
         <name>FECHA ADMISI�N</name>
+        <rename/>
       </field>
       <field>
         <name>ESTADO ACTUAL</name>
+        <rename/>
       </field>
       <field>
         <name>FECHA ESTADO</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
         <name>ID</name>
         <rename>ID</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1342,7 +1314,7 @@
       <meta>
         <name>NOMBRES</name>
         <rename>NOMBRES</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1359,7 +1331,7 @@
       <meta>
         <name>APELLIDOS</name>
         <rename>APELLIDOS</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1375,8 +1347,8 @@
       </meta>
       <meta>
         <name>CEDULA</name>
-        <rename>CEDULA</rename>
-        <type>None</type>
+        <rename>cedula</rename>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1393,7 +1365,7 @@
       <meta>
         <name>MODALIDAD</name>
         <rename>MODALIDAD</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1410,7 +1382,7 @@
       <meta>
         <name>NIVEL</name>
         <rename>NIVEL</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1444,7 +1416,7 @@
       <meta>
         <name>ESTADO ACTUAL</name>
         <rename>ESTADO ACTUAL</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1504,36 +1476,45 @@
     <fields>
       <field>
         <name>﻿ID</name>
+        <rename/>
       </field>
       <field>
         <name>NOMBRES</name>
+        <rename/>
       </field>
       <field>
         <name>APELLIDOS</name>
+        <rename/>
       </field>
       <field>
         <name>CEDULA</name>
+        <rename/>
       </field>
       <field>
         <name>MODALIDAD</name>
+        <rename/>
       </field>
       <field>
         <name>NIVEL</name>
+        <rename/>
       </field>
       <field>
         <name>FECHA ADMISIÓN</name>
+        <rename/>
       </field>
       <field>
         <name>ESTADO ACTUAL</name>
+        <rename/>
       </field>
       <field>
         <name>FECHA ESTADO</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
         <name>﻿ID</name>
         <rename>ID</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1550,7 +1531,7 @@
       <meta>
         <name>NOMBRES</name>
         <rename>NOMBRES</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1567,7 +1548,7 @@
       <meta>
         <name>APELLIDOS</name>
         <rename>APELLIDOS</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1583,8 +1564,8 @@
       </meta>
       <meta>
         <name>CEDULA</name>
-        <rename>CEDULA</rename>
-        <type>None</type>
+        <rename>cedula</rename>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1601,7 +1582,7 @@
       <meta>
         <name>MODALIDAD</name>
         <rename>MODALIDAD</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1618,7 +1599,7 @@
       <meta>
         <name>NIVEL</name>
         <rename>NIVEL</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1652,7 +1633,7 @@
       <meta>
         <name>ESTADO ACTUAL</name>
         <rename>ESTADO ACTUAL</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask/>
@@ -1763,8 +1744,8 @@
         <storage_type/>
       </meta>
       <meta>
-        <name>CEDULA</name>
-        <rename>CEDULA</rename>
+        <name>cedula</name>
+        <rename>cedula2</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -1864,6 +1845,40 @@
         <currency_symbol/>
         <storage_type/>
       </meta>
+      <meta>
+        <name>cedula1</name>
+        <rename>CEDULA</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
+      <meta>
+        <name>cedula_valida</name>
+        <rename>cedula_valida</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1874,8 +1889,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
-      <yloc>160</yloc>
+      <xloc>656</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1931,7 +1946,7 @@
         <remove_special_characters>none</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>CEDULA</in_stream_name>
+        <in_stream_name>cedula</in_stream_name>
         <out_stream_name/>
         <trim_type>both</trim_type>
         <lower_upper>none</lower_upper>
@@ -2018,13 +2033,175 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>160</yloc>
+      <xloc>336</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Data validator FECHA ADMI</name>
+    <name>Filtrar filas</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>Selecciona/Renombra valores 3</send_true_to>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>cedula_valida</leftvalue>
+        <function>LIKE</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>Boolean</type>
+          <text>Y</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask/>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Valor JavaScript modificado</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var cedula1 = String(cedula);
+
+if (/^\d{9}$/.test(cedula1)) {
+    cedula1 = "0" + cedula1;
+}
+
+var cedula_valida = /^\d{10}$/.test(cedula1);</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>cedula1</name>
+        <rename>cedula1</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>cedula_valida</name>
+        <rename>cedula_valida</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Des-Normalización de fila</name>
+    <type>Denormaliser</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <key_field/>
+    <group>
+        </group>
+    <fields>
+        </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>984</xloc>
+      <yloc>340</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Des-Normalización de fila 2</name>
+    <type>Denormaliser</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <key_field/>
+    <group>
+        </group>
+    <fields>
+        </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1184</xloc>
+      <yloc>340</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Data validator</name>
     <type>Validator</type>
     <description/>
     <distribute>Y</distribute>
@@ -2038,14 +2215,14 @@
     <concat_errors>N</concat_errors>
     <concat_separator>|</concat_separator>
     <validator_field>
-      <name>FECHA ADMISIÓN</name>
-      <validation_name/>
+      <name>CEDULA</name>
+      <validation_name>Cedulas</validation_name>
       <max_length/>
-      <min_length/>
-      <null_allowed>N</null_allowed>
+      <min_length>10</min_length>
+      <null_allowed>Y</null_allowed>
       <only_null_allowed>N</only_null_allowed>
       <only_numeric_allowed>N</only_numeric_allowed>
-      <data_type>String</data_type>
+      <data_type>None</data_type>
       <data_type_verified>N</data_type_verified>
       <conversion_mask/>
       <decimal_symbol/>
@@ -2074,8 +2251,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>640</xloc>
-      <yloc>256</yloc>
+      <xloc>816</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
