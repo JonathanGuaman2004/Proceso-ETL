@@ -179,7 +179,7 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 ---
 
 ## Flujo ETL desarrollado
-
+<a id="imagen-2"></a>
 > **Imagen 2**
 > 
 > Flujo ETL
@@ -267,6 +267,73 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 ---
 
 ## Evidencia del resultado
+
+### Ejecución del proceso
+
+Al ejecutar la transformación, todos los pasos terminaron con el visto verde y sin errores, como se observa en la [**Imagen 2**](#imagen-2). En el panel *Logging* de esa captura, Spoon muestra cuántos registros leyó (R) y escribió (W) cada paso, y que ninguno tuvo errores (E=0):
+
+| Paso | Registros leídos | Registros escritos | Errores |
+|---|---|---|---|
+| String operations (unión de las dos fuentes) | 99 | 99 | 0 |
+| Replace in string | 99 | 99 | 0 |
+| Valor JavaScript modificado | 99 | 99 | 0 |
+| Filtrar filas | 99 | 98 | 0 |
+| Ordenar filas | 98 | 98 | 0 |
+| Microsoft Excel writer | 98 | 98 | 0 |
+| Data validator | 98 | 98 | 0 |
+
+De los 99 registros que entraron, **98 llegaron a la salida**. El único registro descartado fue el de la cédula `95258652`, que tiene solo 8 dígitos y no se puede completar de forma segura. En cambio, la cédula `500852125`, de 9 dígitos, sí se recuperó agregándole el `0` inicial.
+
+### Configuración de la salida
+
+Los datos limpios se guardan con el paso `Microsoft Excel writer` en el archivo `Caso Estudiantes Resultado.xls`. En este paso se definió el formato `dd/MM/yyyy` para las dos fechas, así todas quedan escritas de la misma manera (ver [**Imagen 14**](#imagen-14)).
+
+
+### Archivo resultante
+
+Este es el archivo final abierto en Excel. Se puede ver que los datos ya están estandarizados:
+
+<a id="imagen-15"></a>
+
+> **Imagen 15**
+> 
+> Archivo `Caso Estudiantes Resultado.xls` con los datos procesados
+> ![alt text](img/Salida/Resultado.png)
+> *Imagen tomada de Microsoft Excel*
+
+La siguiente tabla compara algunos registros del archivo original con cómo quedaron en el archivo resultante:
+
+| ID | Campo | Antes | Después |
+|---|---|---|---|
+| L000101 | CEDULA | `500852125` | `0500852125` |
+| L000101 | APELLIDOS | `Mu~oz Molina` | `Muñoz Molina` |
+| L000101 | FECHA ADMISIÓN | `01/01/2010 0:00` | `01/01/2010` |
+| L000101 | FECHA ESTADO | `´12/06/2014` | `06/12/2014` |
+| L000102 | MODALIDAD | `Distancia` | `DISTANCIA` |
+| L000102 | ESTADO ACTUAL | `Egresado` | `EGRESADO` |
+| L000107 | ESTADO ACTUAL | `GRD` | `GRADUADO` |
+| L000108 | ESTADO ACTUAL | `EGR` | `EGRESADO` |
+| L000110 | NOMBRES | `Sonia In\|\|s` | `Sonia Inés` |
+| L000110 | ESTADO ACTUAL | `EGRESADA` | `EGRESADO` |
+| L000115 | NOMBRES | `Jos\|\|` | `José` |
+| L000118 | APELLIDOS | `Ramos Pe~a` | `Ramos Peña` |
+| L000199 | CEDULA | `95258652` | Registro descartado |
+
+### Validación de los resultados
+
+Para comprobar los datos de salida se usó el paso `Data validator`, con una regla llamada *Cedulas* que revisa que el campo CEDULA tenga mínimo 10 caracteres (ver [**Imagen 13**](#imagen-13)).
+
+
+En la ejecución, el `Data validator` recibió 98 registros y no reportó ningún error, lo que confirma que todas las cédulas de la salida tienen 10 dígitos.
+
+Además, al revisar el archivo resultante ([**Imagen 15**](#imagen-15)) comprobamos que:
+
+- **Cantidad de registros:** entraron 99 y salieron 98. La diferencia es exactamente el registro con cédula inválida, así que no se perdió ningún dato sin explicación.
+- **Caracteres especiales:** ya no aparecen los símbolos `||` ni `~`; los nombres y apellidos muestran correctamente la `é` y la `ñ`.
+- **Cédulas:** todas tienen 10 dígitos, incluso la que empezaba con `0`.
+- **Modalidad y nivel:** todos los valores están en mayúsculas (`PRESENCIAL`, `DISTANCIA`, `SEMI PRESENCIAL`, `PREGRADO`, `POSTGRADO`).
+- **Estados:** ESTADO ACTUAL solo contiene `MATRICULADO`, `EGRESADO` y `GRADUADO`.
+- **Fechas:** las dos fechas tienen el mismo formato `dd/MM/yyyy`, sin horas ni símbolos sobrantes.
 
 ---
 
