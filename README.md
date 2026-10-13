@@ -179,6 +179,10 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 ---
 
 ## Flujo ETL desarrollado
+
+Para este trabajo se realizó una sola transformación en Pentaho. Esta sigue las tres etapas de un ETL: **Extract** (extraer), **Transform** (transformar) y **Load** (cargar). Primero se leen las dos fuentes (el `.xls` y el `.csv`), luego se juntan en un solo flujo, después se limpian los datos y al final se guardan en un archivo Excel, que se revisa con un validador.
+
+
 <a id="imagen-2"></a>
 > **Imagen 2**
 > 
@@ -187,6 +191,9 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 > *Imagen tomada del Aplicativo **Spoon***
 
 ### Entrada
+
+- **Microsoft Excel input**: lee la fuente 1 (`.xls`) tomando la primera fila como encabezado. A `FECHA ADMISIÓN` y `FECHA ESTADO` se les indica el formato `MM/dd/yy`.
+- **CSV file input**: lee el archivo `Caso Estudiantes Fechas Cedula Fuente2.csv`, que está en la carpeta `Fuentes`. Usa la coma como separador, tiene encabezado y la codificación es UTF-8. También se usa el formato `MM/dd/yy` en las dos fechas.
 
 > **Imagen 3**
 > 
@@ -199,6 +206,13 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 > Entrada de la segunda fuente (archivo `.csv`) 
 > ![alt text](img/Entrada/Entrada2.png) 
 > *Imagen tomada del Aplicativo **Spoon***
+
+Antes de juntar las fuentes, cada una pasa por un paso `Selecciona/Renombra valores`. Esto es necesario porque Spoon pide que los dos flujos que llegan a un mismo paso tengan los mismos campos con los mismos nombres.
+
+- **Rama del Excel**: se cambia `CEDULA` por `cedula` y se arregla el nombre de `FECHA ADMISIÓN`, que llegaba con la tilde dañada.
+- **Rama del CSV**: también se cambia `CEDULA` por `cedula` y se deja el nombre del campo `ID` igual que en el Excel.
+
+Después de esto, las dos ramas se unen en `String operations` y quedan juntas en un solo flujo.
 
 > **Imagen 5**
 > 
@@ -214,11 +228,15 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 
 ### Transformar
 
+1. **String operations**: quita los espacios del inicio y del final en los campos de texto y pasa a **mayúsculas** `MODALIDAD`, `NIVEL` y `ESTADO ACTUAL`. Este paso va antes de `Replace in string` para que los estados ya estén en mayúsculas y solo haga falta reemplazar un caso (por ejemplo `EGR` y no `Egr` o `egr`).
+
 > **Imagen 7**
 > 
 > 1-String operations
 > ![alt text](img/Transformar/1-String%20operations.png)
 > *Imagen tomada del Aplicativo **Spoon***
+
+2. **Replace in string**: cambia unos textos por otros.
 
 > **Imagen 8**
 > 
@@ -226,11 +244,15 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 > ![alt text](img/Transformar/2-Replace%20in%20string.png)
 > *Imagen tomada del Aplicativo **Spoon***
 
+3. **Valor JavaScript modificado**: con un pequeño script se revisan las cédulas. Si una cédula tiene 9 dígitos, se le agrega un `0` al inicio, porque las cédulas deben tener 10. Después se crea el campo `cedula_valida`, que es verdadero solo si la cédula tiene exactamente 10 dígitos. La cédula ya corregida queda en el campo `cedula1`.
+
 > **Imagen 9**
 > 
 > 3-Valor JavaScript modificado
 > ![alt text](img/Transformar/3-Valor%20JavaScript%20modificado.png)
 > *Imagen tomada del Aplicativo **Spoon***
+
+4. **Filtrar filas**: deja pasar solo los registros donde `cedula_valida` es `Y` (verdadero). 
 
 > **Imagen 10**
 > 
@@ -238,11 +260,20 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 > ![alt text](img/Transformar/4-Filtrar%20filas.png)
 > *Imagen tomada del Aplicativo **Spoon***
 
+5. **Ordenar filas**: ordena los registros por `ID` de menor a mayor.
+
 > **Imagen 11**
 > 
 > 5-Ordenar filas
 > ![alt text](img/Transformar/5-Ordenar%20filas.png)
 > *Imagen tomada del Aplicativo **Spoon***
+
+6. **Selecciona/Renombra valores 3**: en este paso se hacen tres cambios.
+   - `FECHA ADMISIÓN` y `FECHA ESTADO` pasan de texto (`String`) a fecha (`Date`), con el formato `MM/dd/yy`.
+   - La cédula original `cedula` se renombra a `cedula2`, para poder usar su nombre.
+   - La cédula corregida `cedula1` se renombra a `CEDULA`.
+
+   Los campos `cedula2` y `cedula_valida` no pasan a la salida, porque el `Microsoft Excel writer` solo escribe los nueve campos originales.
 
 > **Imagen 12**
 > 
@@ -251,6 +282,12 @@ Es necesario mencionar que dado que la actividad indicala utilización de 2 fuen
 > *Imagen tomada del Aplicativo **Spoon***
 
 ### Salida
+
+La salida tiene dos pasos seguidos. Primero `Microsoft Excel writer` crea el archivo y después `Data validator` revisa los datos que salen.
+
+- **Microsoft Excel writer**: escribe el archivo desde la celda `A1`, con encabezado y con las columnas ajustadas al tamaño del texto. Escribe los nueve campos originales y da formato `dd/MM/yyyy` a las dos fechas.
+- **Data validator**: usa la regla *Cedulas* sobre el campo `CEDULA`, que pide que tenga mínimo 10 caracteres.
+
 <a id="imagen-13"></a>
 > **Imagen 13**
 > 
@@ -337,6 +374,12 @@ Además, al revisar el archivo resultante ([**Imagen 15**](#imagen-15)) comproba
 ---
 
 ## Explicación de cómo el proceso se relaciona con una arquitectura de Data Warehouse.
+
+Un **Data Warehouse** es un repositorio central donde se guardan datos limpios y organizados que vienen de distintas fuentes, para poder analizarlos y tomar decisiones. Para llegar a él, los datos pasan por varias etapas: fuentes de datos, Staging Area, transformación y destino. El proceso desarrollado en este trabajo sigue esas mismas etapas en una versión simplificada.
+
+Los archivos `.xls` y `.csv` son las fuentes de datos, y se leen con los pasos `Microsoft Excel input` y `CSV file input` sin modificarlos. Los pasos `Selecciona/Renombra valores` cumplen el papel de Staging Area, porque reciben los datos como texto y dejan las dos fuentes con los mismos campos para poder unirlas, pero todavía no los limpian. Esta zona es importante porque permite ver los errores, como la `ñ` y la `é` mal codificadas o el `,0` al final de la cédula, sin dañar los datos originales. Después viene la transformación, donde se corrigen los caracteres, se estandarizan la modalidad, el nivel y el estado, se completan las cédulas y se pasan las fechas a un único formato. Los registros con cédula inválida se descartan. Esta limpieza es necesaria porque, si los datos se cargaran sin corregir, un mismo estado podría aparecer como `Egresado`, `EGR` o `EGRESADA`, y los conteos saldrían incorrectos.
+
+Por último, el paso `Microsoft Excel writer` guarda los datos en el archivo `Caso Estudiantes Resultado.xls`, y el `Data validator` revisa que las cédulas cumplan la regla definida. En esta práctica el destino fue un archivo Excel, pero, en un caso real, el destino sería una base de datos que funcione como Data Warehouse, donde se podrían responder preguntas como cuántos estudiantes de modalidad a distancia se graduaron por año. El proceso desarrollado es la base para llegar a eso, porque asegura que los datos estén completos, estandarizados y validados antes de cargarse.
 
 ---
 
