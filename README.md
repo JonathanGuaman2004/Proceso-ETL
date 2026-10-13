@@ -1,4 +1,3 @@
-
 <div align="center" style="font-family: Arial, Helvetica, sans-serif; color: #0C233F; max-width: 900px; margin: 0 auto;">
 
   <!-- Encabezado institucional -->
@@ -68,17 +67,15 @@
 
 ## Objetivos
 
-
-
 ### Objetivo General
 
--
+- Desarrollar e implementar un proceso ETL (Extracción, Transformación y Carga) para unificar, depurar y estandarizar la información académica de estudiantes proveniente de distintas fuentes heterogéneas, consolidándola en un formato estructurado y validado que sirva como base para una arquitectura de Data Warehouse.
 
 ### Objetivos Específicos
 
-- 
--
--
+- Extraer e integrar datos desde dos fuentes con distintos formatos (un archivo `.xls` y un archivo `.csv`) adaptando sus esquemas en una etapa inicial para unirlos en un solo flujo de trabajo.
+- Aplicar reglas de transformación y limpieza para corregir errores de codificación en caracteres especiales, estandarizar el formato de las fechas y homogenizar los valores de los campos categóricos (Modalidad, Nivel y Estado Actual).
+- Validar la integridad de los registros procesados mediante la verificación y corrección de la longitud del campo "Cédula", descartando datos irrecuperables, para cargar finalmente la información limpia en un único archivo consolidado.
 
 ---
 
@@ -380,6 +377,15 @@ Un **Data Warehouse** es un repositorio central donde se guardan datos limpios y
 Los archivos `.xls` y `.csv` son las fuentes de datos, y se leen con los pasos `Microsoft Excel input` y `CSV file input` sin modificarlos. Los pasos `Selecciona/Renombra valores` cumplen el papel de Staging Area, porque reciben los datos como texto y dejan las dos fuentes con los mismos campos para poder unirlas, pero todavía no los limpian. Esta zona es importante porque permite ver los errores, como la `ñ` y la `é` mal codificadas o el `,0` al final de la cédula, sin dañar los datos originales. Después viene la transformación, donde se corrigen los caracteres, se estandarizan la modalidad, el nivel y el estado, se completan las cédulas y se pasan las fechas a un único formato. Los registros con cédula inválida se descartan. Esta limpieza es necesaria porque, si los datos se cargaran sin corregir, un mismo estado podría aparecer como `Egresado`, `EGR` o `EGRESADA`, y los conteos saldrían incorrectos.
 
 Por último, el paso `Microsoft Excel writer` guarda los datos en el archivo `Caso Estudiantes Resultado.xls`, y el `Data validator` revisa que las cédulas cumplan la regla definida. En esta práctica el destino fue un archivo Excel, pero, en un caso real, el destino sería una base de datos que funcione como Data Warehouse, donde se podrían responder preguntas como cuántos estudiantes de modalidad a distancia se graduaron por año. El proceso desarrollado es la base para llegar a eso, porque asegura que los datos estén completos, estandarizados y validados antes de cargarse.
+
+---
+
+## Conclusiones
+
+- El proceso ETL logró integrar y depurar con éxito la información de ambas fuentes, resultando en un conjunto de 98 registros válidos y estandarizados tras procesar 99 entradas y descartar de forma controlada un único registro con una cédula inválida de 8 dígitos.
+- La implementación de pasos de transformación específicos, tales como el uso de scripts en JavaScript y operaciones de reemplazo de cadenas, demostró ser fundamental para solventar problemas comunes de calidad de datos, como la mala codificación de caracteres y el uso de formatos inconsistentes.
+- La validación final de los datos a través del paso Data Validator garantiza que el conjunto de salida cumple con las reglas establecidas, asegurando que todas las cédulas posean los 10 caracteres obligatorios para mantener la fiabilidad de la información.
+- El desarrollo de esta práctica evidencia la importancia de la etapa de preparación en un Data Warehouse, ya que asegurar que los datos estén completos y estandarizados es un requisito indispensable para que puedan ser explotados correctamente en la toma de decisiones.
 
 ---
 
