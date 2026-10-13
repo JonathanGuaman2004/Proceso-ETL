@@ -69,13 +69,13 @@
 
 ### Objetivo General
 
-- Desarrollar e implementar un proceso ETL (Extracción, Transformación y Carga) para unificar, depurar y estandarizar la información académica de estudiantes proveniente de distintas fuentes heterogéneas, consolidándola en un formato estructurado y validado que sirva como base para una arquitectura de Data Warehouse.
+- Implementar un proceso ETL (Extract, Transform, Load) completo y una Staging Area utilizando Pentaho Data Integration, con el fin de extraer, preparar y limpiar datos, relacionando este desarrollo con la arquitectura básica de un Data Warehouse.
 
 ### Objetivos Específicos
 
-- Extraer e integrar datos desde dos fuentes con distintos formatos (un archivo `.xls` y un archivo `.csv`) adaptando sus esquemas en una etapa inicial para unirlos en un solo flujo de trabajo.
-- Aplicar reglas de transformación y limpieza para corregir errores de codificación en caracteres especiales, estandarizar el formato de las fechas y homogenizar los valores de los campos categóricos (Modalidad, Nivel y Estado Actual).
-- Validar la integridad de los registros procesados mediante la verificación y corrección de la longitud del campo "Cédula", descartando datos irrecuperables, para cargar finalmente la información limpia en un único archivo consolidado.
+- Reconocer los principales componentes de Pentaho Data Integration para extraer datos desde dos tipos diferentes de fuentes externas hacia un entorno de preparación.
+- Aplicar transformaciones básicas orientadas a limpiar y estandarizar la información, abordando específicamente la corrección de nombres y apellidos y la validación de campos de fecha.
+- Ejecutar el flujo de datos completo y verificar la calidad y consistencia de los registros obtenidos en la salida final.
 
 ---
 
@@ -382,10 +382,10 @@ Por último, el paso `Microsoft Excel writer` guarda los datos en el archivo `Ca
 
 ## Conclusiones
 
-- El proceso ETL logró integrar y depurar con éxito la información de ambas fuentes, resultando en un conjunto de 98 registros válidos y estandarizados tras procesar 99 entradas y descartar de forma controlada un único registro con una cédula inválida de 8 dígitos.
-- La implementación de pasos de transformación específicos, tales como el uso de scripts en JavaScript y operaciones de reemplazo de cadenas, demostró ser fundamental para solventar problemas comunes de calidad de datos, como la mala codificación de caracteres y el uso de formatos inconsistentes.
-- La validación final de los datos a través del paso Data Validator garantiza que el conjunto de salida cumple con las reglas establecidas, asegurando que todas las cédulas posean los 10 caracteres obligatorios para mantener la fiabilidad de la información.
-- El desarrollo de esta práctica evidencia la importancia de la etapa de preparación en un Data Warehouse, ya que asegurar que los datos estén completos y estandarizados es un requisito indispensable para que puedan ser explotados correctamente en la toma de decisiones.
+- El uso del diseñador gráfico Spoon de Pentaho Data Integration permitió reconocer e implementar de forma exitosa las fases de extracción, transformación y carga, logrando unificar dos fuentes de datos diferentes en un solo flujo de trabajo.
+- La implementación de una Staging Area resultó ser una práctica efectiva para aislar y preparar los datos originales de los archivos de entrada, facilitando su manipulación previa a la etapa de almacenamiento final.
+- Las transformaciones diseñadas cumplieron exitosamente con los requerimientos de limpieza al corregir los problemas encontrados en los nombres y apellidos y al asegurar la validación de las fechas, lo que mejoró significativamente el estado de los datos.
+- La verificación de los resultados demostró que el conjunto de datos de salida mantiene un alto nivel de calidad y consistencia, evidenciando de manera práctica cómo este tipo de procesos se relacionan y sustentan la arquitectura básica de un Data Warehouse.
 
 ---
 
