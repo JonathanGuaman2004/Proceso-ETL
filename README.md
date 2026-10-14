@@ -105,7 +105,7 @@
 
 ## Fuentes de Datos
 
-Se utilizó el archivo Estudiantes.xls que se encuentra en el Aula Virtual de la EPN con los siguientes atributos: ID, NOMBRES, APELLIDOS, CEDULA, MODALIDAD, NIVEL, FECHA ADMISIÓN, ESTADO ACTUAL, y FECHA ESTADO.
+Se utilizó el archivo [`Caso Estudiantes Original.xls`](Fuentes/Caso%20Estudiantes%20Original.xls) que se encuentra en el Aula Virtual de la EPN con los siguientes atributos: ID, NOMBRES, APELLIDOS, CEDULA, MODALIDAD, NIVEL, FECHA ADMISIÓN, ESTADO ACTUAL, y FECHA ESTADO.
 
 > **Figura 1:** Archivo fuente original.
 > ![Archivo fuente](img/FuenteDatos.png) 
@@ -114,12 +114,15 @@ Se utilizó el archivo Estudiantes.xls que se encuentra en el Aula Virtual de la
 Dado que la actividad indica la utilización de 2 fuentes diferentes de datos, se separó el archivo original en otros 2 archivos con diferentes extensiones y datos.
 
 **Tabla 1:** Descripción de las fuentes de datos generadas.
+
 | Nombre | Extensión | Descripción |
 |---|---|---|
-| `Caso Estudiantes Fechas Cedula Fuente1` | `.xls` | Hoja de cálculo estándar de Excel. |
-| `Caso Estudiantes Fechas Cedula Fuente2` | `.csv` | Archivo de texto plano separado por comas. |
+| [`Caso Estudiantes Fechas Cedula Fuente1`](Fuentes/Caso%20Estudiantes%20Fechas%20Cedula%20Fuente1.xls) | `.xls` | Hoja de cálculo estándar de Excel. |
+| [`Caso Estudiantes Fechas Cedula Fuente2`](Fuentes/Caso%20Estudiantes%20Fechas%20Cedula%20Fuente2.csv) | `.csv` | Archivo de texto plano separado por comas. |
+
 *Descripción: La tabla detalla los dos archivos creados a partir de la fuente original para cumplir con el requisito de utilizar múltiples formatos de entrada en Pentaho.*
 
+Todos los archivos de entrada están en la carpeta [`Fuentes`](Fuentes/).
 ---
 
 ## Problemas encontrados en los datos
@@ -143,7 +146,7 @@ Dado que la actividad indica la utilización de 2 fuentes diferentes de datos, s
 
 ## Flujo ETL desarrollado
 
-Para este trabajo se realizó una sola transformación en Pentaho Data Integration que sigue las etapas **Extract**, **Transform** y **Load**.
+Para este trabajo se realizó una sola transformación en Pentaho Data Integration ([`Transformación 1.ktr`](Transformaci%EF%BF%BDn%201.ktr)) que sigue las etapas **Extract**, **Transform** y **Load**.
 
 <a id="imagen-2"></a>
 > **Figura 2:** Flujo ETL general.
@@ -198,7 +201,7 @@ Antes de unir las fuentes, se aplica el paso `Selecciona/Renombra valores` para 
 > ![Ordenar filas](img/Transformar/5-Ordenar%20filas.png)
 > *Descripción: Reordenamiento ascendente de los registros utilizando el campo ID.*
 
-6. **Selecciona/Renombra valores 3:**
+5. **Selecciona/Renombra valores 3:**
 > **Figura 12:** Selección de salida.
 > ![Renombrar Salida](img/Transformar/6-Selecciona%20Renombra%20valores.png)
 > *Descripción: Ajuste final de tipos de datos (fechas) y nombres de columnas antes de la carga.*
@@ -220,6 +223,7 @@ Antes de unir las fuentes, se aplica el paso `Selecciona/Renombra valores` para 
 ### Ejecución del proceso
 
 **Tabla 2:** Resumen de registros procesados durante la ejecución del flujo ETL.
+
 | Paso | Registros leídos | Registros escritos | Errores |
 |---|---|---|---|
 | String operations (unión de fuentes) | 99 | 99 | 0 |
@@ -229,15 +233,22 @@ Antes de unir las fuentes, se aplica el paso `Selecciona/Renombra valores` para 
 | Ordenar filas | 98 | 98 | 0 |
 | Microsoft Excel writer | 98 | 98 | 0 |
 | Data validator | 98 | 98 | 0 |
+
 *Descripción: La tabla demuestra que de 99 registros ingresados, 98 superaron exitosamente los filtros de calidad, descartándose un único registro por cédula irrecuperable.*
 
+### Configuración de la salida
+Los datos limpios se guardan con el paso `Microsoft Excel writer`, que escribe el archivo desde la celda `A1`, con encabezado y con las columnas ajustadas al tamaño del texto. Solo se escriben los nueve campos originales y a `FECHA ADMISIÓN` y `FECHA ESTADO` se les da el formato `dd/MM/yyyy`, para que todas las fechas queden escritas de la misma manera (Figura 14).
+
 ### Archivo resultante
+
+El archivo de salida es [`Caso Estudiantes Resultado.xls`](Resultados/Caso%20Estudiantes%20Resultado.xls) y está en la carpeta [`Resultados`](Resultados/). Las figuras del informe están en la carpeta [`img`](img/).
 
 > **Figura 15:** Archivo final procesado.
 > ![Resultado final](img/Salida/Resultado.png)
 > *Descripción: Vista de los datos procesados en Microsoft Excel, evidenciando la correcta estandarización de columnas y formatos de fecha.*
 
 **Tabla 3:** Comparación de campos antes y después del proceso ETL.
+
 | ID | Campo | Antes | Después |
 |---|---|---|---|
 | L000101 | CEDULA | `500852125` | `0500852125` |
@@ -246,7 +257,11 @@ Antes de unir las fuentes, se aplica el paso `Selecciona/Renombra valores` para 
 | L000102 | ESTADO ACTUAL | `Egresado` | `EGRESADO` |
 | L000110 | NOMBRES | `Sonia In\|\|s` | `Sonia Inés` |
 | L000199 | CEDULA | `95258652` | Registro descartado |
+
 *Descripción: Ejemplos de las transformaciones específicas aplicadas a registros seleccionados para verificar la efectividad de los reemplazos.*
+
+### Validación de los resultados
+Para validar la salida se usó el paso `Data validator` con la regla *Cedulas*, que exige que el campo CEDULA tenga mínimo 10 caracteres (Figura 13). El validador recibió 98 registros y no reportó errores. Además, al revisar el archivo resultante (Figura 15) se comprobó que entraron 99 registros y salieron 98, que ya no aparecen los símbolos `||` ni `~`, que MODALIDAD, NIVEL y ESTADO ACTUAL están en mayúsculas y que las fechas tienen el formato `dd/MM/yyyy`.
 
 ---
 
