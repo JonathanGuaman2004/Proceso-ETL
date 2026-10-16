@@ -2,7 +2,7 @@
 
   <!-- Encabezado institucional -->
   <div style="background-color: #0C233F; padding: 32px 20px; border-radius: 8px 8px 0 0;">
-  <img src="img/logos/EPN-blanco.png"
+  <img src="../img/logos/EPN-blanco.png"
          alt="Logo de la Escuela Politécnica Nacional"
          width="200">
 <h1 style="color: #FFFFFF; font-size: 25px; margin: 20px 0 8px;">
@@ -67,25 +67,27 @@
 
 ## Índice
 
-1. [Objetivos](#objetivos)
-   - [Objetivo General](#objetivo-general)
-   - [Objetivos Específicos](#objetivos-específicos)
-2. [Fuentes de Datos](#fuentes-de-datos)
-3. [Problemas encontrados en los datos](#problemas-encontrados-en-los-datos)
-4. [Transformaciones aplicadas](#transformaciones-aplicadas)
-5. [Flujo ETL desarrollado](#flujo-etl-desarrollado)
-   - [Entrada](#entrada)
-   - [Transformar](#transformar)
-   - [Salida](#salida)
-6. [Evidencia del resultado](#evidencia-del-resultado)
-   - [Ejecución del proceso](#ejecución-del-proceso)
-   - [Configuración de la salida](#configuración-de-la-salida)
-   - [Archivo resultante](#archivo-resultante)
-   - [Validación de los resultados](#validación-de-los-resultados)
-7. [Arquitectura de Data Warehouse](#explicación-de-cómo-el-proceso-se-relaciona-con-una-arquitectura-de-data-warehouse)
-8. [Conclusiones](#conclusiones)
-9. [Referencias Bibliográficas](#referencias-bibliográficas)
-10. [Declaración de uso de IA](#declaración-de-uso-de-ia)
+- [**Enlace del Repositorio de GitHub**](#enlace-del-repositorio-de-github)
+- [Índice](#índice)
+- [Objetivos](#objetivos)
+  - [Objetivo General](#objetivo-general)
+  - [Objetivos Específicos](#objetivos-específicos)
+- [Fuentes de Datos](#fuentes-de-datos)
+- [Problemas encontrados en los datos](#problemas-encontrados-en-los-datos)
+- [Transformaciones aplicadas](#transformaciones-aplicadas)
+- [Flujo ETL desarrollado](#flujo-etl-desarrollado)
+  - [Entrada](#entrada)
+  - [Transformar](#transformar)
+  - [Salida](#salida)
+- [Evidencia del resultado](#evidencia-del-resultado)
+  - [Ejecución del proceso](#ejecución-del-proceso)
+  - [Configuración de la salida](#configuración-de-la-salida)
+  - [Archivo resultante](#archivo-resultante)
+  - [Validación de los resultados](#validación-de-los-resultados)
+- [Explicación de cómo el proceso se relaciona con una arquitectura de Data Warehouse](#explicación-de-cómo-el-proceso-se-relaciona-con-una-arquitectura-de-data-warehouse)
+- [Conclusiones](#conclusiones)
+- [Referencias Bibliográficas](#referencias-bibliográficas)
+- [Declaración de uso de IA](#declaración-de-uso-de-ia)
 
 ---
 
@@ -116,13 +118,14 @@ Dado que la actividad indica la utilización de 2 fuentes diferentes de datos, s
 **Tabla 1:** Descripción de las fuentes de datos generadas.
 
 | Nombre | Extensión | Descripción |
-|---|---|---|
+|---|:---:|:---:|
 | [`Caso Estudiantes Fechas Cedula Fuente1`](Fuentes/Caso%20Estudiantes%20Fechas%20Cedula%20Fuente1.xls) | `.xls` | Hoja de cálculo estándar de Excel. |
 | [`Caso Estudiantes Fechas Cedula Fuente2`](Fuentes/Caso%20Estudiantes%20Fechas%20Cedula%20Fuente2.csv) | `.csv` | Archivo de texto plano separado por comas. |
 
 *Descripción: La tabla detalla los dos archivos creados a partir de la fuente original para cumplir con el requisito de utilizar múltiples formatos de entrada en Pentaho.*
 
 Todos los archivos de entrada están en la carpeta [`Fuentes`](Fuentes/).
+
 ---
 
 ## Problemas encontrados en los datos
