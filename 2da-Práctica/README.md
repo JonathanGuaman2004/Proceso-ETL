@@ -230,7 +230,7 @@ Los datos contienen los siguientes atributos:
 ## Problemas encontrados en los datos
 
 - **`id_producto`:** No se identificaron inconsistencias evidentes en los identificadores del conjunto de datos proporcionado.
-- **`nombre_producto`:** No se identificaron inconsistencias evidentes en los identificadores del conjunto de datos proporcionado.
+- **`nombre_producto`:** Algunos nombres de productos incluyen información sobre la cantidad o presentación de venta que ya se encuentra registrada en el campo `unidad_medida`, lo que genera redundancia de información. Por ejemplo, el producto `Pintura blanca 1Lt` incluye en su nombre la presentación de `1L`, que también se encuentra registrada en el campo `unidad_medida`. Sin embargo, no todas las unidades que aparecen en los nombres son redundantes. En el caso de `Llave combinada 14mm`, la medida de `14mm` es una característica propia del producto y no corresponde a su unidad de venta, registrada como `1 und`.
 - **`categoria`:** Existen inconsistencias en la escritura de las categorías, como diferencias entre mayúsculas y minúsculas, espacios adicionales, abreviaturas y variaciones en los nombres de una misma categoría.
 - **`cantidad`:** La cantidad no se encuentra separada de la unidad de medida, sino que ambos valores están almacenados en un mismo campo. Además, algunos registros no contienen una cantidad numérica explícita.
 - **`unidad_medida`:** Se utilizan distintas abreviaturas y formatos para representar una misma unidad de medida, por ejemplo, `und`, `unidad` y `u`.
@@ -242,7 +242,7 @@ Los datos contienen los siguientes atributos:
 ## Transformaciones aplicadas
 
 - **`id_producto`:** Se conservó el identificador original de cada producto, sin modificaciones documentadas.
-- **`nombre_producto`:** Se conservó el nombre del producto original, sin modificaciones documentadas.
+- **`nombre_producto`:** Se eliminaron las referencias a cantidades y presentaciones de venta que estaban duplicadas en el campo `unidad_medida`, conservando las medidas que forman parte de las características propias de los productos. Por ejemplo, se eliminó `1Lt` del nombre `Pintura blanca 1Lt`, mientras que se conservó `14mm` en `Llave combinada 14mm`, ya que identifica el tamaño de la herramienta.
 - **`categoria`:** Se estandarizaron los nombres de las categorías mediante operaciones de texto y reemplazos de valores, con el propósito de unificar las diferencias de escritura, las abreviaturas y el uso de mayúsculas y minúsculas.
 - **`cantidad`:** Se separó la cantidad de la unidad de medida y se completaron los valores vacíos con `1` cuando correspondía. Finalmente, se estableció el tipo de dato entero.
 - **`unidad_medida`:** Se separó del valor original que contenía tanto la cantidad como la unidad y se estandarizaron sus representaciones mediante operaciones de texto y reemplazos de valores.
