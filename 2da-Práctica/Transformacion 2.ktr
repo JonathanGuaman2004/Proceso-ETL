@@ -1352,9 +1352,9 @@
     </partitioning>
     <connection>PostgreSQL Conexión</connection>
     <schema>staging</schema>
-    <table>productos_ferreteria_raw_new</table>
+    <table>productos_ferreteria_clean</table>
     <commit>1000</commit>
-    <truncate>N</truncate>
+    <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>N</use_batch>
     <specify_fields>Y</specify_fields>
