@@ -76,13 +76,14 @@
 
 ### Objetivo general
 
--
+- Desarrollar un proceso ETL en Pentaho Data Integration que tome los datos de productos de la Ferretería El Tornillo Feliz desde una tabla de PostgreSQL, los limpie y los estandarice, y los guarde en una nueva tabla, para tener información ordenada que ayude a manejar mejor el inventario.
 
 ### Objetivos específicos
 
--
--
--
+-  Crear el esquema `staging` y la tabla `productos_ferreteria_raw`, insertando los 100 productos con el script SQL entregado.
+- Detectar los problemas que presentan los datos originales, tales como categorías escritas de diferentes maneras o unidades de medida distintas.
+- Estandarizar los nombres de las categorías y las unidades de medida, siguiendo los pasos de transformación en Pentaho.
+- Cargar los datos limpios a una nueva tabla, para disponer de un catálogo de productos normalizado.
 
 ---
 
@@ -398,6 +399,13 @@ El archivo de salida es [`Resultado.xls`](Resultado/Resultado.xls), ubicado en l
 ---
 
 ## Conclusiones
+
+- El proceso ETL hizo posible tomar datos desordenados y dejarlos limpios y listos para utilizar. Al dividir el trabajo en extracción, transformación y carga se facilitó la búsqueda y corrección de errores.
+- Las operaciones de *String operations* y *Replace in string* fueron útiles para arreglar los problemas más comunes de texto. Categorías tales como "Htas." y "herram." quedaron unificadas en una sola ("Herramienta"), y también pasó lo mismo con las unidades como "und", "u" y "unidad".
+- Al separar la cantidad de la unidad de medida, nos dimos cuenta de que algunos datos no tenían escrito un número. En el paso *Mapeo de valores* les asignamos el valor 1, con lo cual no deberían quedar campos vacíos.
+- Al convertir el precio de texto con `$` a un número decimal se podrán realizar cálculos como sumas y promedios, lo cual no era posible con el formato original.
+- Aprendimos que un proceso ETL se va mejorando poco a poco, porque al probarlo aparecen detalles que no se ven al principio, por ejemplo, que los datos se duplican si se ejecuta la transformación más de una vez sin vaciar la tabla.
+ 
 
 ---
 
