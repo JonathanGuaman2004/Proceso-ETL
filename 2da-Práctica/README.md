@@ -68,7 +68,51 @@
 
 ## Índice
 
-<!-- Completar el índice. -->
+### Contenido
+
+1. [Objetivos](#objetivos)
+   - [Objetivo general](#objetivo-general)
+   - [Objetivos específicos](#objetivos-específicos)
+2. [Fuentes de datos](#fuentes-de-datos)
+3. [Problemas encontrados en los datos](#problemas-encontrados-en-los-datos)
+4. [Transformaciones aplicadas](#transformaciones-aplicadas)
+5. [Flujo ETL desarrollado](#flujo-etl-desarrollado)
+   - [Conexión con PostgreSQL](#conexión-con-postgresql)
+   - [Entrada](#entrada)
+   - [Transformación](#transformación)
+   - [Salida](#salida)
+6. [Evidencia del resultado](#evidencia-del-resultado)
+   - [Ejecución del proceso](#ejecución-del-proceso)
+   - [Configuración de la salida](#configuración-de-la-salida)
+   - [Archivo resultante](#archivo-resultante)
+   - [Validación de los resultados](#validación-de-los-resultados)
+7. [Conclusiones](#conclusiones)
+8. [Referencias bibliográficas](#referencias-bibliográficas)
+9. [Declaración de uso de IA](#declaración-de-uso-de-ia)
+
+### Índice de figuras
+
+- [Figura 1. Archivo fuente original](#figura-1)
+- [Figura 2. Flujo general del proceso ETL](#figura-2)
+- [Figura 3. Configuración de la conexión con PostgreSQL](#figura-3)
+- [Figura 4. Inserción de los datos mediante el script SQL](#figura-4)
+- [Figura 5. Datos insertados en la base de datos](#figura-5)
+- [Figura 6. Configuración de la entrada de datos en Spoon](#figura-6)
+- [Figura 7. Configuración del paso String operations](#figura-7)
+- [Figura 8. Configuración del paso Replace in string](#figura-8)
+- [Figura 9. Configuración del paso Mapeo de valores](#figura-9)
+- [Figura 10. Configuración del paso Selecciona/Renombra valores](#figura-10)
+- [Figura 11. Configuración del paso Salida Tabla](#figura-11)
+- [Figura 12. Configuración de la salida en formato `.xls`](#figura-12)
+- [Figura 13. Datos procesados en la base de datos](#figura-13)
+- [Figura 14. Datos procesados en formato `.xls`](#figura-14)
+
+### Índice de tablas
+
+- [Tabla 1. Cantidad de registros en el origen y en el destino](#tabla-1)
+- [Tabla 2. Estandarización de las categorías](#tabla-2)
+- [Tabla 3. Estandarización de las unidades de medida](#tabla-3)
+- [Tabla 4. Comparación de registros antes y después del proceso ETL](#tabla-4)
 
 ---
 
@@ -258,6 +302,8 @@ Para este trabajo se desarrolló una transformación en Pentaho Data Integration
 
 <a id="imagen-2"></a>
 
+<a id="figura-2"></a>
+
 > **Figura 2:** Flujo general del proceso ETL.
 >
 > ![Flujo ETL](img/ProcesoETL.png)
@@ -267,6 +313,8 @@ Para este trabajo se desarrolló una transformación en Pentaho Data Integration
 ### Conexión con PostgreSQL
 
 <a id="imagen-3"></a>
+
+<a id="figura-3"></a>
 
 > **Figura 3:** Configuración de la conexión con PostgreSQL.
 >
@@ -278,12 +326,14 @@ Para este trabajo se desarrolló una transformación en Pentaho Data Integration
 
 Los datos se ingresaron en la base de datos mediante el uso de `pgAdmin4`.
 
+<a id="figura-4"></a>
 > **Figura 4:** Inserción de los datos mediante el [script SQL](#script).
 >
 > ![Inserción de datos](img/Entrada/InsercionDatos.png)
 >
 > *Descripción: Vista de la ejecución del script SQL para insertar los datos en PostgreSQL. Captura tomada de `pgAdmin4`.*
 
+<a id="figura-5"></a>
 > **Figura 5:** Datos insertados en la base de datos.
 >
 > ![Datos en la base de datos](img/Entrada/DatosEnLaBD.png)
@@ -292,6 +342,7 @@ Los datos se ingresaron en la base de datos mediante el uso de `pgAdmin4`.
 
 A continuación, se utilizó Spoon para extraer los datos mediante el paso **Entrada Tabla**, cuya configuración se muestra en la siguiente figura.
 
+<a id="figura-6"></a>
 > **Figura 6:** Configuración de la entrada de datos en Spoon.
 >
 > ![Entrada de tabla](img/Entrada/EntradaTabla.png)
@@ -316,6 +367,7 @@ FROM staging.productos_ferreteria_raw;
 
 1. **String operations:** Se aplicaron operaciones para convertir el texto a minúsculas, colocar en mayúscula la primera letra de determinados campos y eliminar los espacios en blanco.
 
+   <a id="figura-7"></a>
    > **Figura 7:** Configuración del paso String operations.
    >
    > ![String operations](img/Transformar/1-String%20operations.png)
@@ -324,22 +376,25 @@ FROM staging.productos_ferreteria_raw;
 
 2. **Replace in string:** Se reemplazaron textos inconsistentes para unificar los valores de determinados campos.
 
+   <a id="figura-8"></a>
    > **Figura 8:** Configuración del paso Replace in string.
    >
    > ![Replace in string](img/Transformar/2-Replace%20in%20string.png)
    >
    > *Descripción: Diccionario de reemplazos configurado en Pentaho para estandarizar cadenas de texto, especialmente en los campos `categoria` y `unidad_medida`. Captura tomada de Spoon.*
 
-3. **Mapeo de valores:** Se completaron los valores vacíos del campo `cantidad`.
+4. **Mapeo de valores:** Se completaron los valores vacíos del campo `cantidad`.
 
+   <a id="figura-9"></a>
    > **Figura 9:** Configuración del paso Mapeo de valores.
    >
    > ![Mapeo de valores](img/Transformar/3-Mapeo%20de%20valores.png)
    >
    > *Descripción: Algunos valores de cantidad, obtenidos del campo `unidad_medida`, no contenían un dígito explícito, ya que se sobreentendía que su valor era 1. Sin embargo, al separar la cantidad y la unidad de medida, el campo `cantidad` quedaba vacío, por lo que fue necesario completar esos valores. Captura tomada de `Spoon`.*
 
-4. **Selecciona/Renombra valores:** Se ajustaron los nombres y los tipos de datos de las columnas de salida.
+5. **Selecciona/Renombra valores:** Se ajustaron los nombres y los tipos de datos de las columnas de salida.
 
+   <a id="figura-10"></a>
    > **Figura 10:** Configuración del paso Selecciona/Renombra valores.
    >
    > ![Seleccionar y renombrar valores](img/Transformar/4-SeleccionaRenombraValores.png)
@@ -348,13 +403,17 @@ FROM staging.productos_ferreteria_raw;
 
 ### Salida
 
-> **Figura 11:** Configuración del paso Salida Tabla.
+<a id="figura-11"></a>
+
+>  **Figura 11:** Configuración del paso Salida Tabla.
 >
 > ![Salida de tabla](img/Salida/Salida%20Tabla.png)
 >
 > *Descripción: Configuración del paso Salida Tabla para especificar como destino el esquema `staging` y la tabla `productos_ferreteria_raw_new`. Captura tomada de `Spoon`.*
 
 Adicionalmente, se incorporó un paso para visualizar los datos procesados que también fueron enviados a la base de datos.
+
+<a id="figura-12"></a>
 
 > **Figura 12:** Configuración de la salida en formato `.xls`.
 >
@@ -368,33 +427,125 @@ Adicionalmente, se incorporó un paso para visualizar los datos procesados que t
 
 ### Ejecución del proceso
 
-**Tabla 2:** Resumen de los registros procesados durante la ejecución del flujo ETL.
+Al ejecutar la transformación, los datos pasaron por todos los pasos del flujo ([Figura 2](#figura-2)): se leyeron desde la tabla `staging.productos_ferreteria_raw`, se limpiaron y se cargaron en la nueva tabla `staging.productos_ferreteria_clean`. Al mismo tiempo, el paso `Microsoft Excel writer` generó una copia en formato `.xls` para poder revisarlos.
 
-<!-- Insertar aquí la tabla con los resultados de la ejecución. -->
+En el paso `Salida Tabla` se activó la opción **Vaciar tabla** ([Figura 11](#figura-11)). Gracias a esto, cada vez que se ejecuta la transformación la tabla destino se limpia antes de cargar, y los productos no se duplican.
 
-*Descripción: Resumen de los registros procesados durante la ejecución del flujo ETL.*
+Para comprobar que no se perdió ningún registro, se comparó la cantidad de filas del origen con la de los destinos, como se muestra en la [Tabla 1](#tabla-1).
+
+<a id="tabla-1"></a>
+
+**Tabla 1:** Cantidad de registros en el origen y en el destino.
+
+| Ubicación | Tipo | Registros | Evidencia |
+|---|---|---|---|
+| `staging.productos_ferreteria_raw` | Origen (PostgreSQL) | 100 | [Figura 5](#figura-5) |
+| `staging.productos_ferreteria_clean` | Destino (PostgreSQL) | 100 | [Figura 13](#figura-13) |
+| [`Resultado.xls`](Resultado/Resultado.xls) | Copia de revisión (Excel) | 100 | [Figura 14](#figura-14) |
+
+*Descripción: Los 100 productos que se insertaron con el script SQL llegaron completos a la tabla limpia y al archivo de Excel. Ningún registro se descartó, porque el objetivo de esta práctica era estandarizar los datos y no filtrarlos.*
 
 ### Configuración de la salida
 
-Los datos limpios se almacenaron en la base de datos, como se muestra en la siguiente figura.
+Los datos limpios se almacenaron en la tabla `productos_ferreteria_clean` del esquema `staging`, como se muestra en la siguiente figura. En esta tabla `cantidad` quedó como número entero (`smallint`) y `precio_unitario` como número decimal (`numeric(6,2)`), ya sin el símbolo `$`.
+
+<a id="figura-13"></a>
 
 > **Figura 13:** Datos procesados en la base de datos.
 >
 > ![Tabla en la base de datos](img/Salida/TablaEnBD.png)
 >
-> *Descripción: Vista de los datos obtenidos mediante la consulta SQL `SELECT * FROM staging.productos_ferreteria_raw_new;`. Se muestra la tabla `productos_ferreteria_raw_new`, creada en el esquema `staging`. Captura tomada de `pgAdmin4`.*
+> *Descripción: Vista de los datos obtenidos mediante la consulta SQL `SELECT * FROM staging.productos_ferreteria_clean;`. Se muestra la tabla `productos_ferreteria_clean`, creada en el esquema `staging`. En la parte inferior se observa el total de 100 filas. Captura tomada de `pgAdmin4`.*
 
 Por otra parte, como se mencionó anteriormente, se utilizó el paso `Microsoft Excel writer`, que escribe el archivo a partir de la celda `A1`, incluye los encabezados y ajusta las columnas al tamaño del texto.
+
+<a id="figura-14"></a>
 
 > **Figura 14:** Datos procesados en formato `.xls`.
 >
 > ![Tabla en Excel](img/Salida/TablaEnXLS.png)
 >
-> *Descripción: Vista de los datos procesados en Microsoft Excel, en la que se muestran las columnas estandarizadas y los formatos de cantidad y precio. Captura tomada de `Excel`*
+> *Descripción: Vista de los datos procesados en Microsoft Excel, en la que se muestran las columnas estandarizadas y los formatos de cantidad y precio. Captura tomada de `Excel`.*
 
 ### Archivo resultante
 
-El archivo de salida es [`Resultado.xls`](Resultado/Resultado.xls), ubicado en la carpeta [`Resultado`](Resultado/). Las figuras utilizadas en este informe se encuentran en la carpeta [`img`](img/).
+El archivo de salida es [`Resultado.xls`](Resultado/Resultado.xls), ubicado en la carpeta [`Resultado`](Resultado/). La transformación de Pentaho está en [`Transformacion 2.ktr`](Transformacion%202.ktr) y las figuras utilizadas en este informe se encuentran en la carpeta [`img`](img/).
+
+Al revisar el archivo se observa que las 44 formas distintas en las que estaban escritas las categorías quedaron reducidas a solo 8 ([Tabla 2](#tabla-2)), y que las 22 formas de escribir la unidad de medida quedaron en 10 ([Tabla 3](#tabla-3)).
+
+<a id="tabla-2"></a>
+
+**Tabla 2:** Estandarización de las categorías.
+
+| Categoría final | Valores originales | Productos |
+|---|---|---|
+| Herramienta | `Herramientas`, `Herramientas ` (con espacio), `herramientas`, `HERRAMIENTAS`, `Herramienta`, `Htas.`, `Htas`, `htas.`, `htas`, `herram.` | 21 |
+| Pintura | `Pinturas`, `PINTURAS`, `Pintura`, `pintura`, `PINTURA`, `Pint.`, `pint.`, `Pint` | 20 |
+| Ferretería | `Ferretería`, `ferretería`, `FERRETERÍA`, `Ferreteria`, `ferreteria`, `FERRETERIA`, `Ferre`, `ferre` | 22 |
+| Fontanería | `Fontanería`, `fontanería`, `Fontaneria`, `fontaneria`, `FONTANERIA` | 12 |
+| Electricidad | `Electricidad`, `electricidad`, `ELECTRICIDAD`, `Electric.`, `electr.` | 9 |
+| Seguridad | `Seguridad`, `seguridad`, `SEGURIDAD` | 7 |
+| Adhesivo | `Adhesivos`, `adhesivos`, `Adhesivo` | 5 |
+| Sellador | `Selladores`, `sellador` | 4 |
+| **Total** | | **100** |
+
+*Descripción: Cada fila muestra cómo estaba escrita una misma categoría en la tabla original y el valor único con el que quedó después del proceso. Elaboración propia a partir de la tabla `productos_ferreteria_raw` y del archivo `Resultado.xls`.*
+
+<a id="tabla-3"></a>
+
+**Tabla 3:** Estandarización de las unidades de medida.
+
+| Unidad final | Valores originales | Productos |
+|---|---|---|
+| unidad | `1 und`, `1 unidad`, `1 Unidad`, `1u` | 49 |
+| caja | `Caja`, `caja`, `CAJA`, `CJ` | 13 |
+| rollo | `1 rollo`, `1 rl` | 12 |
+| litro | `1L`, `1 Lt`, `1 litro`, `4L` | 5 |
+| metro | `1 metro`, `1 m`, `1 mt` | 4 |
+| tubo | `1 tubo` | 4 |
+| par | `1 par` | 4 |
+| frasco | `1 frasco` | 3 |
+| set | `1 set` | 3 |
+| hoja | `1 hoja` | 3 |
+| **Total** | | **100** |
+
+*Descripción: La cantidad se separó en su propio campo y la unidad quedó escrita siempre en minúsculas y con la palabra completa. 99 productos quedaron con cantidad `1` y uno (`F012`, pintura de `4L`) con cantidad `4`. Elaboración propia.*
+
+La [Tabla 4](#tabla-4) compara algunos registros de la tabla original con cómo quedaron en la tabla limpia.
+
+<a id="tabla-4"></a>
+
+**Tabla 4:** Comparación de registros antes y después del proceso ETL.
+
+| ID | Campo | Antes | Después |
+|---|---|---|---|
+| F002 | categoria | `Htas.` | `Herramienta` |
+| F002 | unidad_medida | `1 unidad` | cantidad `1`, unidad `unidad` |
+| F002 | precio_unitario | `$3.25` (texto) | `3.25` (decimal) |
+| F003 | categoria | `Herramientas ` (con espacio) | `Herramienta` |
+| F003 | unidad_medida | `1u` | cantidad `1`, unidad `unidad` |
+| F010 | nombre_producto | `Pintura blanca 1Lt` | `Pintura blanca` |
+| F010 | unidad_medida | `1L` | cantidad `1`, unidad `litro` |
+| F012 | unidad_medida | `4L` | cantidad `4`, unidad `litro` |
+| F022 | unidad_medida | `CJ` | cantidad `1`, unidad `caja` |
+| F025 | categoria | `Ferre` | `Ferretería` |
+| F055 | categoria | `Electric.` | `Electricidad` |
+| F060 | unidad_medida | `1 mt` | cantidad `1`, unidad `metro` |
+| F063 | nombre_producto | `Llave combinada 14mm` | `Llave combinada 14mm` (no cambia, es el tamaño) |
+| F075 | categoria | `Pint` | `Pintura` |
+| F075 | unidad_medida | `1 rl` | cantidad `1`, unidad `rollo` |
+
+*Descripción: Ejemplos de registros en los que se aplicaron las transformaciones. Elaboración propia comparando la [Figura 5](#figura-5) con la [Figura 13](#figura-13) y el archivo [`Resultado.xls`](Resultado/Resultado.xls).*
+
+### Validación de los resultados
+
+Para comprobar que el resultado es correcto se revisó lo siguiente:
+
+- **Cantidad de registros:** la tabla original y la tabla limpia tienen 100 filas cada una ([Tabla 1](#tabla-1)), así que no se perdió ni se duplicó ningún producto.
+- **Categorías:** el campo `categoria` solo tiene 8 valores (`Herramienta`, `Pintura`, `Ferretería`, `Fontanería`, `Electricidad`, `Seguridad`, `Adhesivo` y `Sellador`), sin abreviaturas ni diferencias de mayúsculas ([Tabla 2](#tabla-2)).
+- **Unidades de medida:** el campo `unidad_medida` solo tiene 10 valores escritos con la palabra completa en minúsculas, y la cantidad quedó en su propio campo de tipo entero ([Tabla 3](#tabla-3)).
+- **Precios:** ningún precio tiene el símbolo `$` y todos se guardaron como número decimal. Además, la suma de los 100 precios es **534.70** tanto en la tabla original como en la limpia, lo que confirma que al quitar el `$` no se cambió ningún valor.
+- **Campos sin cambios:** `id_producto` y `proveedor` se mantienen iguales a los de la tabla original.
 
 ---
 
