@@ -559,9 +559,11 @@ Para comprobar que el resultado es correcto se revisó lo siguiente:
  
 
 ---
+
 ## Referencias bibliográficas
 
 [1] Escuela Politécnica Nacional, "Business Intelligence: Práctica Initial Load"[cite: 27], Facultad de Ingeniería de Sistemas[cite: 27], s.f.
+
 [2] Hitachi Vantara, "Try Pentaho Data Integration and Analytics 10.1.x"[cite: 1], 4 de marzo de 2025. [En línea]. Disponible en: https://docs.hitachivantara.com[cite: 1]
 
 ## Declaración de uso de IA
