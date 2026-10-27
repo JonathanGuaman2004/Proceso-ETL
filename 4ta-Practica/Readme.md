@@ -281,11 +281,25 @@ _Descripción: _
 
 ## Conclusiones
 
+- Modelar la tabla `Tabla_Desnormalizada_Ventas.csv` en un esquema estrella permitió separar lo que describe a una venta de lo que se mide en ella. Los 100 registros originales quedaron en una tabla de hechos (`fact_ventas`) y tres dimensiones: `dim_producto` con 9 productos, `dim_cliente` con 10 clientes y `dim_fecha` con 147 fechas. Así, los datos de cada producto y de cada cliente se guardan una sola vez en lugar de repetirse en cada venta.
+- La tabla de staging fue útil para revisar y limpiar los datos sin tocar los archivos fuente. En `stg_products` se corrigieron los espacios y tabulaciones de los nombres antes de cargar los 699 productos en `dim_product`. En `stg_ventas` se verificó que no hubiera valores nulos, fechas de envío anteriores a la fecha de venta ni montos mal calculados.
+- La comprobación final confirmó que la carga fue correcta. La tabla de hechos tiene las mismas 100 ventas del archivo original y el total vendido es de **69 547**, igual en la tabla de staging y en `fact_ventas`, por lo que no se perdió ni se duplicó ninguna venta.
+- Con el modelo estrella fue sencillo responder las cinco preguntas de negocio, porque cada consulta solo necesitó unir la tabla de hechos con las dimensiones que hacían falta. Por ejemplo, se encontró que el cliente `1022` es el que más ingresos generó (11 656), que `Product 19` es el producto más vendido (60 unidades) y que los productos de tamaño `Medium` comprados por clientes casados suman el mayor monto de ventas (23 714).
+- La dimensión `dim_fecha` resultó muy práctica, ya que una misma tabla sirvió para analizar tanto la fecha de venta como la fecha de envío. Además, tener ya calculados el año, el mes y el año-mes evitó repetir funciones de fecha en cada consulta.
+- Mantener `category` y `subcategory` dentro de la dimensión de producto, aunque sus valores se repitan, facilita el análisis y mantiene el modelo como un esquema estrella simple. Separarlas en tablas propias lo habría convertido en un esquema copo de nieve, con más uniones en cada consulta.
+- El diagrama en Power Pivot ayudó a comprobar visualmente las relaciones uno a muchos entre cada dimensión y la tabla de hechos, y confirmó que el diseño hecho en PostgreSQL era coherente antes de usarlo para el análisis.
+
 - ***
 
 ## Referencias bibliográficas
 
-[1]
+\[1\] Escuela Politécnica Nacional, "Práctica 4. Implementación física de una dimensión para un modelo estrella en PostgreSQL", guía de práctica de la asignatura Business Intelligence, Quito, Ecuador, 2026.
+
+\[2\] R. Kimball y M. Ross, *The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling*, 3.ª ed. Indianapolis, IN, EE. UU.: Wiley, 2013.
+
+\[3\] Microsoft, "Power Pivot: Powerful data analysis and data modeling in Excel". [En línea]. Disponible en: https://support.microsoft.com/es-es/office/power-pivot-an%C3%A1lisis-de-datos-y-modelado-de-datos-eficaces-en-excel-a9c2c6e2-cc49-4976-a7d7-40896795d045
+
+---
 
 ## Declaración de uso de IA
 
