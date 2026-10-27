@@ -371,4 +371,3 @@ Se declara formalmente que el porcentaje de uso de herramientas de inteligencia 
 
 [1]: https://github.com/JonathanGuaman2004/Proceso-ETL.git
 ```<ElicitationsGroup>
-</ElicitationsGroup>
