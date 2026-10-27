@@ -71,23 +71,20 @@
 
 ### Contenido
 
-- [Índice](#índice)
-  - [Contenido](#contenido)
-  - [Índice de figuras](#índice-de-figuras)
-- [Objetivos](#objetivos)
-  - [Objetivo general](#objetivo-general)
-  - [Objetivos específicos](#objetivos-específicos)
-- [Fuentes de datos](#fuentes-de-datos)
-- [Diseño dimensional](#diseño-dimensional)
-- [Problemas encontrados en los datos](#problemas-encontrados-en-los-datos)
-- [Transformaciones aplicadas](#transformaciones-aplicadas)
-  - [Tabla\_Desnormalizada\_Ventas.csv](#tabla_desnormalizada_ventascsv)
-  - [products.csv](#productscsv)
-- [Configuración de carga](#configuración-de-carga)
-- [Consultas - Resultado](#consultas---resultado)
-- [Conclusiones](#conclusiones)
-- [Referencias bibliográficas](#referencias-bibliográficas)
-- [Declaración de uso de IA](#declaración-de-uso-de-ia)
+1. [Objetivos](#objetivos)
+   - [Objetivo general](#objetivo-general)
+   - [Objetivos específicos](#objetivos-específicos)
+2. [Fuentes de datos](#fuentes-de-datos)
+3. [Diseño dimensional](#diseño-dimensional)
+4. [Problemas encontrados en los datos](#problemas-encontrados-en-los-datos)
+5. [Transformaciones aplicadas](#transformaciones-aplicadas)
+   - [Tabla_Desnormalizada_Ventas.csv](#tabla_desnormalizada_ventascsv)
+   - [products.csv](#productscsv)
+6. [Configuración de carga](#configuración-de-carga)
+7. [Consultas - Resultado](#consultas---resultado)
+8. [Conclusiones](#conclusiones)
+9. [Referencias bibliográficas](#referencias-bibliográficas)
+10. [Declaración de uso de IA](#declaración-de-uso-de-ia)
 
 ### Índice de figuras
 
@@ -216,14 +213,12 @@ El modelo se compone de una tabla de hechos central y tres dimensiones principal
 
 ## Configuración de carga
 
-Para llevar a cabo el proceso de importación y transformación en PostgreSQL mediante pgAdmin, se siguió una secuencia estructurada de extracción, limpieza y carga hacia el modelo estrella:
+El proceso de carga (ETL) se llevó a cabo utilizando **pgAdmin 4** para gestionar la base de datos PostgreSQL. Para asegurar que la información desnormalizada de los archivos fuente llegara de manera íntegra y limpia al modelo dimensional final, se siguió un flujo de trabajo estructurado en cuatro fases principales. A continuación, se detalla este flujo de trabajo apoyado por capturas de pantalla del proceso:
 
-1. **Creación de estructuras (DDL):** El primer paso consistió en ejecutar el script de creación de tablas. Se crearon dos tablas temporales o de *staging* (`stg_products` y `stg_ventas`) para recibir los datos crudos, así como las tablas definitivas del modelo estrella: las dimensiones (`dim_producto`, `dim_cliente`, `dim_fecha`) y la tabla de hechos (`fact_ventas`).
-2. **Importación de datos a Staging:** Utilizando la herramienta *Import/Export Data* de pgAdmin, se poblaron las tablas temporales. Para `products.csv` se utilizó codificación UTF8 y el separador de coma (`,`). Para `Tabla_Desnormalizada_Ventas.csv`, al venir en otro formato, se ajustó el delimitador a punto y coma (`;`). En ambos casos se activó la opción "Header" para omitir la fila de encabezados.
-3. **Limpieza y transformación (DML):** Una vez los datos en *staging*, se ejecutaron sentencias `UPDATE` para sanear la información. Se utilizaron funciones como `TRIM()`, `UPPER()` y `regexp_replace()` para eliminar espacios redundantes, tabulaciones ocultas y estandarizar mayúsculas.
-4. **Carga al Modelo Dimensional:** Finalmente, se utilizaron sentencias `INSERT INTO ... SELECT DISTINCT` para extraer los registros únicos de productos, clientes y fechas desde `stg_ventas`, poblando las dimensiones y autogenerando sus claves sustitutas (tipo `SERIAL` o `INT`). Posteriormente, se cargó la tabla `fact_ventas` relacionando las métricas con las claves dimensionales correspondientes. Se verificaron los conteos finales para asegurar la integridad de los datos.
-
-A continuación, se detallan las evidencias visuales de este proceso:
+1. **Creación de estructuras (DDL):** El primer paso consistió en ejecutar el script de creación de tablas. Se crearon dos tablas temporales o de *staging* (`stg_products` y `stg_ventas`) diseñadas específicamente para recibir los datos crudos en su formato original, así como las tablas definitivas del modelo estrella: las dimensiones (`dim_producto`, `dim_cliente`, `dim_fecha`) y la tabla de hechos (`fact_ventas`).
+2. **Importación de datos a Staging:** Utilizando la herramienta *Import/Export Data* de pgAdmin, se poblaron las tablas temporales. Para `products.csv` se utilizó codificación UTF8 y el separador de coma (`,`). Para `Tabla_Desnormalizada_Ventas.csv`, debido a su estructura, se ajustó el delimitador a punto y coma (`;`). En ambos casos se activó la opción "Header" para omitir la fila de encabezados y evitar que los nombres de las columnas se ingresen como datos.
+3. **Limpieza y transformación (DML):** Con los datos ya alojados en el área de *staging*, se ejecutaron sentencias `UPDATE` para sanear la información antes de moverla. Se utilizaron funciones nativas de PostgreSQL como `TRIM()`, `UPPER()` y `regexp_replace()` para eliminar espacios redundantes, tabulaciones ocultas y estandarizar el uso de mayúsculas, garantizando así la calidad del dato.
+4. **Carga al Modelo Dimensional y Comprobación:** En el último paso, se utilizaron sentencias `INSERT INTO ... SELECT DISTINCT` para extraer únicamente los registros únicos de productos, clientes y fechas desde `stg_ventas`. Esto pobló las dimensiones autogenerando sus claves sustitutas. Posteriormente, se cargó la tabla `fact_ventas` relacionando las métricas cuantitativas con las claves dimensionales correspondientes. Finalmente, se ejecutaron consultas de comprobación para asegurar que el conteo de filas y la sumatoria total de ventas coincidieran con los datos originales.
 
 <a id="figura-3"></a>
 
@@ -293,9 +288,15 @@ A continuación, se detallan las evidencias visuales de este proceso:
 
 ## Consultas - Resultado
 
-Para validar la utilidad y correcta estructuración del modelo estrella implementado, se diseñaron cinco consultas SQL que responden a requerimientos analíticos específicos de negocio. Gracias a las claves foráneas en la tabla de hechos, los cruces de información (`JOIN`) resultan directos e intuitivos. 
+Una vez que el modelo dimensional fue poblado correctamente, se procedió a la fase de explotación de datos. Para validar la utilidad y correcta estructuración del esquema estrella implementado, se plantearon las siguientes cinco preguntas de negocio:
 
-A continuación se detalla la lógica de cada consulta y su resultado:
+1. **¿Cuántas ventas se realizaron por categoría de producto y mes?**
+2. **¿Cuál es el ingreso total (ventas) por cliente y género?**
+3. **¿Cuál es la cantidad total vendida por producto?**
+4. **¿Cuál fue la cantidad enviada por mes de envío?**
+5. **¿Cuánto se vendió por tamaño de producto y por estado civil del cliente?**
+
+A continuación, se presenta la resolución de cada consulta mediante sentencias SQL, demostrando cómo el uso de uniones (`JOIN`) entre la tabla de hechos central y sus dimensiones facilita y agiliza el análisis analítico:
 
 <a id="figura-11"></a>
 
@@ -369,3 +370,5 @@ Se declara formalmente que el porcentaje de uso de herramientas de inteligencia 
 ---
 
 [1]: https://github.com/JonathanGuaman2004/Proceso-ETL.git
+```<ElicitationsGroup>
+</ElicitationsGroup>
