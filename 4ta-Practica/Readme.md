@@ -71,20 +71,23 @@
 
 ### Contenido
 
-1. [Objetivos](#objetivos)
-   - [Objetivo general](#objetivo-general)
-   - [Objetivos específicos](#objetivos-específicos)
-2. [Fuentes de datos](#fuentes-de-datos)
-3. [Diseño dimensional](#diseño-dimensional)
-4. [Problemas encontrados en los datos](#problemas-encontrados-en-los-datos)
-5. [Transformaciones aplicadas](#transformaciones-aplicadas)
-   - [Tabla_Desnormalizada_Ventas.csv](#tabla_desnormalizada_ventascsv)
-   - [products.csv](#productscsv)
-6. [Configuración de carga](#configuración-de-carga)
-7. [Consultas - Resultado](#consultas---resultado)
-8. [Conclusiones](#conclusiones)
-9. [Referencias bibliográficas](#referencias-bibliográficas)
-10. [Declaración de uso de IA](#declaración-de-uso-de-ia)
+- [Índice](#índice)
+  - [Contenido](#contenido)
+  - [Índice de figuras](#índice-de-figuras)
+- [Objetivos](#objetivos)
+  - [Objetivo general](#objetivo-general)
+  - [Objetivos específicos](#objetivos-específicos)
+- [Fuentes de datos](#fuentes-de-datos)
+- [Diseño dimensional](#diseño-dimensional)
+- [Problemas encontrados en los datos](#problemas-encontrados-en-los-datos)
+- [Transformaciones aplicadas](#transformaciones-aplicadas)
+  - [Tabla\_Desnormalizada\_Ventas.csv](#tabla_desnormalizada_ventascsv)
+  - [products.csv](#productscsv)
+- [Configuración de carga](#configuración-de-carga)
+- [Consultas - Resultado](#consultas---resultado)
+- [Conclusiones](#conclusiones)
+- [Referencias bibliográficas](#referencias-bibliográficas)
+- [Declaración de uso de IA](#declaración-de-uso-de-ia)
 
 ### Índice de figuras
 
@@ -144,6 +147,21 @@ _Descripción: Captura de pantalla de los archivos `.csv` de los que se obtuvier
 ![Diagrama Power Pivot](img/PowerPivot/diagrama.png)
 
 _Descripción: Diseño del modelo dimensional en esquema estrella. Se observa la tabla de hechos `fact_ventas` en el centro, conectada mediante claves foráneas a las dimensiones `dim_producto`, `dim_cliente` y `dim_fecha`._
+
+El modelo se compone de una tabla de hechos central y tres dimensiones principales:
+
+*   **`fact_ventas` (Tabla de Hechos):** 
+    *   Actúa como el núcleo transaccional del modelo, registrando cada línea de venta individual.
+    *   Contiene las claves foráneas (`product_key`, `customer_key`, `order_date_key`, `ship_date_key`) que la conectan con las dimensiones, así como las medidas cuantitativas del negocio (`quantity`, `unit_price`, `product_cost`, `sales_amount`).
+*   **`dim_cliente` (Dimensión de Clientes):** 
+    *   Almacena los atributos demográficos y socioeconómicos asociados a cada comprador.
+    *   Incluye variables clave como la fecha de nacimiento (`birth_date`), estado civil (`marital_status`), género (`gender`), ingresos (`income`), número de hijos (`children`), propiedad de vivienda (`home_owner`) y cantidad de vehículos (`cars`).
+*   **`dim_producto` (Dimensión de Productos):** 
+    *   Agrupa la información descriptiva de los artículos utilizando una clave sustituta (`product_key`) como clave primaria.
+    *   Incorpora atributos jerárquicos y descriptivos como el código del producto (`product_code`), nombre (`product_name`), precio de lista (`list_price`), color, tamaño (`size`), categoría (`category`) y subcategoría (`subcategory`).
+*   **`dim_fecha` (Dimensión de Tiempo):** 
+    *   Construida a partir de la unificación de las fechas de orden y envío para permitir análisis temporales avanzados.
+    *   Desglosa cada fecha en atributos jerárquicos estándar como año (`year`), trimestre (`quarter`), mes (`month`), nombre del mes (`month_name`) y periodo año-mes (`year_month`).
 
 ---
 
