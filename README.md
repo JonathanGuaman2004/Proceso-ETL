@@ -72,3 +72,6 @@
 
 ---
 # [Práctica 5](5ta-Práctica/)
+
+---
+# [Práctica 6](6ta-Practica/)
