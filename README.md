@@ -71,7 +71,10 @@
 # [Práctica 4](4ta-Practica/)
 
 ---
-# [Práctica 5](5ta-Práctica/)
+# Práctica 5
+## [Práctica 5 Participación](5ta-Práctica-Participacion/)
 
+## [Práctica 5 Visualización](5ta-Practica-CreacionDatawarehouse/)
 ---
-# [Práctica 6](6ta-Practica/)
+# Práctica 6
+## [Práctica 6 Visualización](6ta-Práctica-Visualización/)
