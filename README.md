@@ -78,3 +78,9 @@
 ---
 # Práctica 6
 ## [Práctica 6 Visualización](6ta-Práctica-Visualización/)
+
+---
+# Copo de Nieve
+## [Copo de Nieve](Caso de estudio - COPO DE NIEVE)
+---
+
