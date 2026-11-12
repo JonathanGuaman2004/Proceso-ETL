@@ -81,6 +81,6 @@
 
 ---
 # Copo de Nieve
-## [Copo de Nieve](Caso de estudio - COPO DE NIEVE)
+## [Copo de Nieve](Caso%20de%20estudio%20-%20COPO%20DE%20NIEVE)
 ---
 
