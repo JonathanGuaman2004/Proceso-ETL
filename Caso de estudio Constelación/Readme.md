@@ -425,6 +425,11 @@ Se declara formalmente que el porcentaje de uso de herramientas de inteligencia 
 
 ---
 
+## Enlaces
+
+- Repositorio: [Caso de estudio Constelación][1]
+- Dashboard en Power BI: [Ver dashboard HappyTech][2]
+
 [1]: https://github.com/JonathanGuaman2004/Proceso-ETL/blob/main/Caso%20de%20estudio%20Constelaci%C3%B3n
 [2]: https://app.powerbi.com/view?r=eyJrIjoiMDkyOGU3ZDEtZTYxZC00MWJiLWE5YTktYTVkNTNhOTQzMGM4IiwidCI6IjY4MmE0ZTZhLWE3N2YtNDk1OC1hM2FjLTllMjY2ZDE4YWEzNyIsImMiOjR9
 
