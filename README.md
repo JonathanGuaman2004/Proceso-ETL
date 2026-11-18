@@ -84,3 +84,7 @@
 ## [Copo de Nieve](Caso%20de%20estudio%20-%20COPO%20DE%20NIEVE)
 ---
 
+---
+# Caso Constelación
+## [Constelación](Caso%20de%20estudio%20Constelación)
+---
