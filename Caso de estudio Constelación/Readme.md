@@ -27,7 +27,7 @@
 <div style="width: 65px; height: 3px; background-color: #F4BC47; margin: 18px auto;"></div>
 
 <h2 style="color: #0C233F; font-size: 28px; margin: 20px 0;">
-      MODELO DIMENSIONAL CONSTELACIÓN EN PENTAHO, POSTGRESQL Y POWER BI
+      MODELO DIMENSIONAL CONSTELACIÓN
     </h2>
 
 <p style="font-size: 16px; color: #475569;">
@@ -260,6 +260,7 @@ El proceso ETL se desarrolló en **Pentaho Data Integration (Spoon) 10.2** con d
 > **Figura 8:** Comprobación de la carga.
 >
 > ![Comprobación](img/PostgreSQL/comprobacionCarga.png)
+> ![Comprobación](img/PostgreSQL/comprobación_de_la_carga.png)
 >
 > _Descripción: Ejecución de la consulta de comprobación en pgAdmin. Conteo de registros: 30 fechas, 5 productos, 5 clientes, 5 ubicaciones, 50 pedidos y 50 tickets._
 
@@ -420,9 +421,9 @@ Tickets por unidad = DIVIDE([Tickets], [Unidades])
 
 ## Declaración de uso de IA
 
-Se declara formalmente que el porcentaje de uso de herramientas de inteligencia artificial generativa (Claude, Anthropic, 2026) para la estructuración, redacción y formato de este informe ha sido del **20 %**. La IA se utilizó como apoyo para la redacción y el formato Markdown, mientras que el diseño del modelo, el proceso ETL en Pentaho, la implementación en PostgreSQL, el dashboard en Power BI y las capturas de pantalla son producto del trabajo de los integrantes del grupo.
+Se declara formalmente que el porcentaje de uso de herramientas de inteligencia artificial generativa para la estructuración, redacción de este informe ha sido del **20 %**. La IA se utilizó como apoyo para la redacción y el formato Markdown, mientras que el diseño del modelo, el proceso ETL en Pentaho, la implementación en PostgreSQL, el dashboard en Power BI y las capturas de pantalla son producto del trabajo de los integrantes del grupo.
 
 ---
 
-[1]: https://github.com/JonathanGuaman2004/Proceso-ETL.git
-[2]: PEGAR_AQUI_EL_ENLACE_DEL_DASHBOARD
+[1]: https://github.com/JonathanGuaman2004/Proceso-ETL.git/Caso%20de%20estudio%20Constelación
+[2]: https://app.powerbi.com/view?r=eyJrIjoiMDkyOGU3ZDEtZTYxZC00MWJiLWE5YTktYTVkNTNhOTQzMGM4IiwidCI6IjY4MmE0ZTZhLWE3N2YtNDk1OC1hM2FjLTllMjY2ZDE4YWEzNyIsImMiOjR9
